@@ -1,4 +1,4 @@
-package com.example.cinevesture;
+package com.cinevesture.app;
 
 import android.content.Intent;
 import android.net.Uri;

@@ -131,12 +131,14 @@ class _MyHomePageState extends State<MyHomePage> {
           child: InAppWebView(
               onConsoleMessage: (controller, msg) {},
               onLoadStart: (controller, url) {
-                print('here the url $url');
+                // print('here the url $url&src=app');
+                // controller.loadUrl(
+                //     urlRequest: URLRequest(url: Uri.parse('$url&src=app')));
                 if (url.toString().contains('/login')) {
                   print('here the url true $url');
                   webViewControllergetx.isLogin.value = true;
                 } else {
-                  print('here the url false $url');
+                  // print('here the url false $url');
                   webViewControllergetx.isLogin.value = !true;
                 }
               },
