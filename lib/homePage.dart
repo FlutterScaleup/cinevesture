@@ -22,6 +22,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final webViewControllergetx = Get.find<WebViewController>();
   PullToRefreshController pullToRefreshController = PullToRefreshController();
   bool willPop = false;
+  String oldUrl = '';
 
   Future<bool> _onWillPop() async {
     webViewControllergetx.webviewController.goBack();
@@ -120,6 +121,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  void initState() {
+    oldUrl = widget.url;
+    print('cinevesture:$oldUrl');
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _onWillPop,
@@ -129,20 +137,33 @@ class _MyHomePageState extends State<MyHomePage> {
             top: MediaQuery.of(context).padding.top,
           ),
           child: InAppWebView(
-              onConsoleMessage: (controller, msg) {},
+              onConsoleMessage: (controller, msg) {
+
+                print('');
+              },
               onLoadStart: (controller, url) {
-                // print('here the url $url&src=app');
-                // controller.loadUrl(
-                //     urlRequest: URLRequest(url: Uri.parse('$url&src=app')));
+                 //print('here the url $url');
                 if (url.toString().contains('/login')) {
-                  print('here the url true $url');
                   webViewControllergetx.isLogin.value = true;
                 } else {
-                  // print('here the url false $url');
                   webViewControllergetx.isLogin.value = !true;
+                }
+                print('old url:$oldUrl\nnew url:${url.toString()}');
+                 if(oldUrl != url.toString()){
+                oldUrl = url.toString();
+                if(!oldUrl.contains('src=app')) {
+                  if(oldUrl.contains('?')){
+                    oldUrl = '$oldUrl&src=app';
+                     } else {
+                    oldUrl = '$oldUrl?src=app';
+                  }
+                 // Fluttertoast.showToast(msg: oldUrl);
+                  controller.loadUrl(urlRequest: URLRequest(url: Uri.parse(oldUrl)));
+                }
                 }
               },
               onLoadStop: (controller, url) {
+                oldUrl = url.toString();
                 if (url.toString() == widget.url) {
                   willPop = true;
                 } else {

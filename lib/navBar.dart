@@ -20,7 +20,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     'http://devtest1.cinevesture.com/job/search',
     'http://devtest1.cinevesture.com/user/profile-private-show'
   ];
-  var _SelectedTab = 'http://devtest1.cinevesture.com/home';
+  var _SelectedTab = 'http://devtest1.cinevesture.com/home?src=app';
   int index = 0;
   @override
   Widget build(BuildContext context) {
